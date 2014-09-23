@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>MUSIC_SEND</title>
+    <script src="/static/angular-1.2.24/angular.min.js"></script>
+    <script src="/static/angular-1.2.24/angular-resource.min.js"></script>
+    <script src="/static/angular-1.2.24/angular-route.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
+    <script>
+      var musiclistApp = angular.module('MusicListModule',[]);
+      musiclistApp.config(function($interpolateProvider){
+          $interpolateProvider.startSymbol('{@');
+          $interpolateProvider.endSymbol('@}');
+          });
+musiclistApp.controller('MusicListController',['$scope',function($scope){
+    $scope.musiclist = [
+    {% for music in musics %}
+    "{{music}}",
+    {% endfor %}
+    ];
+    }]);
+
+
+
+
+    
+    </script>
+  </head>
+  <body ng-app="MusicListModule">
+  <div ng-controller="MusicListController">
+    검색 : <input ng-model = 'searchText'>
+    <ul>
+      <li ng-repeat="music in musiclist | filter:searchText">
+        <a href="music/{@music@}">{@music@}</a> <a href="music_down/{@music@}">다운받기</a><p>
+      </li>
+    </ul>
+  </body>
+</html>
